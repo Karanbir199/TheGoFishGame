@@ -21,32 +21,32 @@ import java.util.Scanner;
  * @author Paul Bonenfant Jan 2020
  */
 public class Game {
-
-    private List<Player> players = new ArrayList<>(); // the players of the game//the title of the game
-    private GroupOfCards deck = new GroupOfCards();//the title of the game
+    private List<Player> players = new ArrayList<>();
+    private GroupOfCards deck = new GroupOfCards();
+    private Scanner scanner = new Scanner(System.in);
 
     public void startGame() {
-        Scanner scanner = new Scanner(System.in);
         deck.shuffle();
 
         System.out.println("Enter the number of players:");
-        int numOfPlayers = Integer.parseInt(scanner.nextLine());
+        int numPlayers = Integer.parseInt(scanner.nextLine());
 
-        for (int i = 0; i < numOfPlayers; i++) {
+        for (int i = 0; i < numPlayers; i++) {
             System.out.println("Enter name for player " + (i + 1) + ":");
             String name = scanner.nextLine();
             players.add(new Player(name));
         }
 
-        // For this code we have set 5 as a number of the cards that each player will recieve initially.
-        for (int i = 0; i < 5; i++) {
-            for (Player player : players) {
+       
+        for (Player player : players) {
+            for (int i = 0; i < 5; i++) {
                 player.receiveCard(deck.draw());
             }
         }
 
         
         for (Player player : players) {
+            playerDecision(player);
             player.showHand();
             System.out.println();
         }
@@ -54,26 +54,42 @@ public class Game {
         declareWinner();
     }
 
+    private void playerDecision(Player player) {
+        System.out.println(player.getPlayerName()
+                + ", do you want to take your turn or surrender? (type 'turn' to play or 'surrender' to give up)");
+        String decision = scanner.nextLine().trim().toLowerCase();
+        if (decision.equals("surrender")) {
+            System.out.println(player.getPlayerName() + " has chosen to surrender.");
+        } else {
+            System.out.println(player.getPlayerName() + " takes their turn.");
+        }
+    }
+
+    public void declareWinner() {
+        Player winner = null;
+        Card highestCard = null;
+        int highestValue = 0;
+
+        for (Player player : players) {
+            Card playerHighestCard = player.getHighestCard();
+            int value = Arrays.asList("2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace")
+                    .indexOf(playerHighestCard.getRank()) + 2;
+            if (value > highestValue) {
+                highestValue = value;
+                highestCard = playerHighestCard;
+                winner = player;
+            }
+        }
+
+        if (winner != null) {
+            System.out.println("The winner is " + winner.getPlayerName() + " with the " + highestCard);
+        } else {
+            System.out.println("No winner could be declared.");
+        }
+    }
+
     public static void main(String[] args) {
         Game game = new Game();
         game.startGame();
     }
-
-    public void declareWinner() {
-    Player winner = null;
-    Card highestCard = null;
-    int highestValue = 0;
-
-    for (Player player : players) {
-        Card playerHighestCard = player.getHighestCard();
-        int value = Arrays.asList("2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace").indexOf(playerHighestCard.getRank()) + 2;
-        if (value > highestValue) {
-            highestValue = value;
-            highestCard = playerHighestCard;
-            winner = player;
-        }
-    }
-
-    System.out.println("The winner is " + winner.getName() + " with the " + highestCard);
-}
 }

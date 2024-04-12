@@ -38,5 +38,3 @@ package ca.sheridancollege.project;
         return rank + " of " + suit;
     }
 }
-
-

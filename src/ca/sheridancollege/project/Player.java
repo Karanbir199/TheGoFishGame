@@ -40,18 +40,18 @@ public class Player {
         }
     }
 
-    public String getName() {
+    public String getPlayerName() {
         return playerName;
     }
 
     public Card getHighestCard() {
         Card highest = null;
         int highestValue = 0;
-        String[] ranks = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" };
-        List<String> rankList = Arrays.asList(ranks);
+        List<String> rankList = Arrays.asList("2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King",
+                "Ace");
 
         for (Card card : hand) {
-            int value = rankList.indexOf(card.getRank()) + 2; 
+            int value = rankList.indexOf(card.getRank()) + 2;
             if (value > highestValue) {
                 highest = card;
                 highestValue = value;

@@ -22,7 +22,6 @@ import java.util.List;
  */
 public class GroupOfCards {
     private List<Card> cards = new ArrayList<>();
-    // For the size of the dealing i.e the number of cards each player gets, we have put that in the for loop in Game class
     
     public GroupOfCards() {
        
