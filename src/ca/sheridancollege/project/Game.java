@@ -29,9 +29,9 @@ public class Game {
         deck.shuffle();
 
         System.out.println("Enter the number of players:");
-        int numPlayers = Integer.parseInt(scanner.nextLine());
+        int numOfPlayers = Integer.parseInt(scanner.nextLine());
 
-        for (int i = 0; i < numPlayers; i++) {
+        for (int i = 0; i < numOfPlayers; i++) {
             System.out.println("Enter name for player " + (i + 1) + ":");
             String name = scanner.nextLine();
             players.add(new Player(name));
@@ -56,7 +56,7 @@ public class Game {
 
     private void playerDecision(Player player) {
         System.out.println(player.getPlayerName()
-                + ", do you want to take your turn or surrender? (type 'turn' to play or 'surrender' to give up)");
+                + ", Do you want to play or surrender (type 'turn' to play or 'surrender' to give up)");
         String decision = scanner.nextLine().trim().toLowerCase();
         if (decision.equals("surrender")) {
             System.out.println(player.getPlayerName() + " has chosen to surrender.");
