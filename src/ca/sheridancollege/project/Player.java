@@ -2,8 +2,16 @@
  * SYST 17796 Project Base code.
  * Students can modify and extend to implement their game.
  * Add your name as an author and the date!
+ * 
+ *  Jaisman Singh Sidhu
+ * Harsimran Singh
+ * Karanbir Singh
  */
 package ca.sheridancollege.project;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A class that models each Player in the game. Players have an identifier, which should be unique.
@@ -11,39 +19,44 @@ package ca.sheridancollege.project;
  * @author dancye
  * @author Paul Bonenfant Jan 2020
  */
-public abstract class Player {
+public class Player {
+    private String playerName;
+    private List<Card> hand = new ArrayList<>();
 
-    private String name; //the unique name for this player
-
-    /**
-     * A constructor that allows you to set the player's unique ID
-     *
-     * @param name the unique ID to assign to this player.
-     */
-    public Player(String name) {
-        this.name = name;
+    public Player(String playerName) {
+        this.playerName = playerName;
     }
 
-    /**
-     * @return the player name
-     */
+    public void receiveCard(Card card) {
+        if (card != null) {
+            hand.add(card);
+        }
+    }
+
+    public void showHand() {
+        System.out.println(playerName + "'s hand:");
+        for (Card card : hand) {
+            System.out.println(card);
+        }
+    }
+
     public String getName() {
-        return name;
+        return playerName;
     }
 
-    /**
-     * Ensure that the playerID is unique
-     *
-     * @param name the player name to set
-     */
-    public void setName(String name) {
-        this.name = name;
+    public Card getHighestCard() {
+        Card highest = null;
+        int highestValue = 0;
+        String[] ranks = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" };
+        List<String> rankList = Arrays.asList(ranks);
+
+        for (Card card : hand) {
+            int value = rankList.indexOf(card.getRank()) + 2; 
+            if (value > highestValue) {
+                highest = card;
+                highestValue = value;
+            }
+        }
+        return highest;
     }
-
-    /**
-     * The method to be overridden when you subclass the Player class with your specific type of Player and filled in
-     * with logic to play your game.
-     */
-    public abstract void play();
-
 }
